@@ -1,6 +1,6 @@
-# Basic Sample Hardhat Project
+# Smart Contract for a turn-based Epic Game using Hardhat
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+Characters attack the boss with their Attack Damage.
 
 Try running some of the following tasks:
 
