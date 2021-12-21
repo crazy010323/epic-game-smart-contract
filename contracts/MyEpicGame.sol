@@ -23,6 +23,14 @@ contract MyEpicGame is ERC721 {
         uint attackDamage;
     }
 
+    struct BigBoss {
+        string name;
+        string imageUri;
+        uint hp;
+        uint maxHp;
+        uint attackDamage;
+    }
+
     // The tokenId is the NFTs unique identifier, it's just a number that goes
     // 0, 1, 2, 3, etc.
     using Counters for Counters.Counter;
@@ -37,13 +45,21 @@ contract MyEpicGame is ERC721 {
     
 
     CharacterAttributes[] defaultCharacters;
+    BigBoss bigBoss;
 
     constructor(
         string[] memory characterNames,
         string[] memory characterImageURIs,
         uint[] memory characterHPs,
-        uint[] memory characterAttackDamage
+        uint[] memory characterAttackDamage,
+        string memory bossName,
+        string memory bossImageUri,
+        uint bossHp,
+        uint bossAttackDamage
     ) ERC721("Epic-Robots", "EPR") {
+
+        bigBoss = BigBoss(bossName, bossImageUri, bossHp, bossHp, bossAttackDamage);
+
         for (uint256 i = 0; i < characterNames.length; i++) {
             defaultCharacters.push(CharacterAttributes({
                 characterIndex: i,
@@ -109,5 +125,29 @@ contract MyEpicGame is ERC721 {
         );
         string memory output = string(abi.encodePacked('data:application/json;base64,', json));
         return output;
+    }
+
+    function attackBoss() public {
+        
+        // Get the status of the player's NFT
+        uint playerTokenId = nftHolders[msg.sender];
+        CharacterAttributes storage player = nftHolderAttributes[playerTokenId];
+
+        // Make sure the player has more than 0 HP
+        require(player.hp > 0, 'Error: You must have HP to attack the boss');
+
+        // Make sure the boss has more than 0 HP
+        require(bigBoss.hp > 0, 'Error: Boss must have HP to player the game (already died)');
+
+        // Allow player to attack the boss
+        if (bigBoss.hp > player.attackDamage)   bigBoss.hp -= player.attackDamage;
+        else bigBoss.hp = 0;
+
+        // Allow boss to attack this player
+        if (player.hp > bigBoss.attackDamage)   player.hp -= bigBoss.attackDamage;
+        else    player.hp = 0;
+
+        console.log('Player `%s` attacked boss, current HP for Boss is %d', player.name, bigBoss.hp);
+        console.log('Boss attacked the player `%s`, current HP of this player is %d', player.name, player.hp);
     }
 }
