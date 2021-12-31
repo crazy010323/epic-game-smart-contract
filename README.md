@@ -1,6 +1,6 @@
 # Smart Contract for a turn-based Epic Game using Hardhat
 
-Characters attack the boss with their Attack Damage.
+Characters attack the boss with their Attack Damage. (NFT basedt Games)
 
 Try running some of the following tasks:
 
