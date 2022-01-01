@@ -40,7 +40,7 @@ contract MyEpicGame is ERC721 {
     mapping (uint256 => CharacterAttributes) public nftHolderAttributes;
 
     // A mapping from an address => the NFTs tokenId. Gives me an ez way
-    // to store the owner of the NFT and reference it later.
+    // to store the owner of the NFT and reference it later
     mapping (address => uint256) public nftHolders;
     
 
