@@ -120,7 +120,7 @@ contract MyEpicGame is ERC721 {
             string(abi.encodePacked(
                 '{"name": "', c.name, ' -- NFT #: ', Strings.toString(_tokenId), '", ',
                 '"description": "This is an NFT that lets people play in the game Metaverse Slayer!", ',
-                '"image": "', c.imageUri, '", ',
+                '"image": "ipfs://', c.imageUri, '", ',
                 '"attributes": [',
                     '{ "trait_type": "Health Points", "value": ', strHp,', "max_value":', strMaxHp, '}, ',
                     '{ "trait_type": "Attack Damage", "value": ', strAttackDamage, '} ]}'
